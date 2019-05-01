@@ -16,3 +16,14 @@ Content in this repository includes:
   other related projects
 - Tools and build configuration for generating documentation in
   convenient formats
+
+# A note on document formats
+
+In order to accommodate content that is reasonably complex, we are
+using pandoc-flavoured Markdown. The main difference is in top-level
+metadata, and support for complex tables.
+
+In practice, that means that the usual content previews provided by
+Bitbucket and GitHub don't display the content correctly. Files must
+be processed by pandoc into HTML in order to see tables and other
+content correctly.
