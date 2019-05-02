@@ -916,10 +916,10 @@ of an IRI publishing a vocabulary that uses that resource.
 | id                | integer       | auto\_increment        | ID for this row of the table; surrogate key         | 1, 2, ...                                           |
 +-------------------+---------------+------------------------+-----------------------------------------------------+-----------------------------------------------------+
 | iri               | varchar(1023) |                        | Resource to be mapped. There is an index            | http://vocab.aodn.org.au/def/organisation/entity/32 |
-|                   |               |                        | on this field for quick lookups.                    |                                                     |
+|                   |               |                        | on this field for quick *lookups*.                  |                                                     |
 +-------------------+---------------+------------------------+-----------------------------------------------------+-----------------------------------------------------+
 | access\_point\_id | integer       | foreign key references | Access point to use to resolve the resource.        | 45, 67, ...                                         |
-|                   |               | access\_point\_ids(id) | Must be an access point with type="sissvoc".        |                                                     |
+|                   |               | access\_point\_ids(id) | Must be an access point with type="SISSVOC".        |                                                     |
 |                   |               |                        | There is an index on this field for                 |                                                     |
 |                   |               |                        | quick *deletes*.                                    |                                                     |
 +-------------------+---------------+------------------------+-----------------------------------------------------+-----------------------------------------------------+
@@ -1065,7 +1065,7 @@ e.g., needing confirmation from the user.
 |                             |              |                       | delivered. Enumerated type: EMAIL                           |                            |
 +-----------------------------+--------------+-----------------------+-------------------------------------------------------------+----------------------------+
 | notification\_element\_type | varchar(45)  |                       | The type of notification being subscribed to.               | VOCABULARY                 |
-|                             |              |                       | Enumerated type: OWNER, VOCABULARY                          |                            |
+|                             |              |                       | Enumerated type: SYSTEM, OWNER, VOCABULARY                  |                            |
 +-----------------------------+--------------+-----------------------+-------------------------------------------------------------+----------------------------+
 | notification\_element\_id   | integer      |                       | The id of the element of the element type which             | 2                          |
 |                             |              |                       | is being subscribed to. If the element type does            |                            |
