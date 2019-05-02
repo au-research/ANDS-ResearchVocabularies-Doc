@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>230</x>
+      <y>190</y>
+      <w>570</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>/*T Model Base*/
+--
+em: EntityManager
+fixedTime: LocalDateTime
+vocabularyId: Integer
+--
+#setEm(entityManager)
+#setFixedTime(aFixedTime)
+#setVocabularyId(aVocabularyId)
+#em(): EntityManager
+#fixedTime(): LocalDateTime
+#vocabularyId(): Integer
+/#populateModel()/
+/describeModel()/
+/#insertIntoSchema(vocabulary, includeVersions, includeAccessPoints, includeREs)/
+/#diff(tvm2: TVocabularyModel)/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>560</y>
+      <w>310</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>*T Vocabulary Model*
+--
+-vocabulary
+-subModels: List&lt;TModelBase&gt;
+--
+isEmpty(): boolean
+-populateSubmodels()
+#getTVersionsModel()
+getFixedTimeInstance(includeVersions,
+         includeAccessPoints, includeREs)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>140</x>
+      <y>430</y>
+      <w>370</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>350.0;10.0;350.0;100.0;10.0;100.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>30</y>
+      <w>790</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>*T Model Methods*
+--
+--
+_createTVocabularyModel(em: EntityManager, vocabularyId: Integer, fixedTime: LocalDateTime): TVocabularyModel_
+_getFixedTimeInstance(tvm: TVocabularyModel, includeVersions, includeAccessPoints, includeREs)_
+_diff(tvm1: TVocabularyModel, tvm2: TVocabularyModel, vdiff: VocabularyDifferences)_
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>230</x>
+      <y>790</y>
+      <w>310</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>*T Versions Model*
+--
+-vocabularyModel: TVocabularyModel
+-versions
+-subModels: List&lt;TModelBase&gt;
+--
+-populateSubmodels()
+#getVersions()
+#getTAccessPointsModel()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>790</y>
+      <w>310</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>*T Access Points Model*
+--
+-vocabularyModel: TVocabularyModel
+-versionsModel: TVersionsModel
+-versions
+-aps
+--
+#getAPs()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>80</x>
+      <y>120</y>
+      <w>30</w>
+      <h>460</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;440.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>380</x>
+      <y>430</y>
+      <w>130</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>110.0;10.0;110.0;100.0;10.0;100.0;10.0;360.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>480</x>
+      <y>430</y>
+      <w>320</w>
+      <h>380</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0;300.0;100.0;300.0;360.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1010</x>
+      <y>60</y>
+      <w>390</w>
+      <h>340</h>
+    </coordinates>
+    <panel_attributes>*Vocabulary Differences*
+--
+-finalResult: RegistryEventEventType
+-title: String
+-vocabularyDiffs: Set&lt;String&gt;
+-fieldDiffs: DiffResult
+-versionDiffs: Map&lt;Integer, VersionDiffs&gt;
+--
+getFinalResult()
+setFinalResult(aFinalResult: RegistryEventEventType)
+getTitle()
+setTitle(aTitle: String)
+getVocabularyDiffs()
+addVocabularyDiff(aVocabularyDiff: String)
+getFieldDiffs()
+setFieldDiffs(aFieldDiffs: DiffResult)
+getVersionDiffs()
+requireVersionDiffsForVersion(versionId: Integer)
+getVersionDiffsForVersion(versionId: Integer)
+addVersionDiff(versionId: Integer, aVersionDiff: String)
+cleanupVersionDiffs()
+isEmpty(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1010</x>
+      <y>530</y>
+      <w>380</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>*Version Differences*
+--
+-finalResult: RegistryEventEventType
+-title: String
+-versionDiffs: List&lt;String&gt;
+-fieldDiffs: DiffResult
+--
+getFinalResult()
+setFinalResult(aFinalResult: RegistryEventEventType)
+getTitle()
+setTitle(aTitle: String)
+getVersionDiffs()
+addVersionDiff(aVersionDiff: String)
+getFieldDiffs()
+setFieldDiffs(aFieldDiffs: DiffResult)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1150</x>
+      <y>390</y>
+      <w>160</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+r1=
+m1=1
+r2=version differences
+m2=0..*
+m1pos=5,0
+r1pos=5,0</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+</diagram>

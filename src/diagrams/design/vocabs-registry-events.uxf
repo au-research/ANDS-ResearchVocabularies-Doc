@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>40</y>
+      <w>320</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>*Registry Event*
+--
+- id
+- element_type: RegistryEventElementType
+- element_id
+- event_date
+- event_type: RegistryEventEventType
+- event_user
+- event_details</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>400</x>
+      <y>40</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+*Registry Event Element Type*
+--
+VOCABULARIES
+VERSIONS
+RELATED_ENTITIES</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>650</x>
+      <y>40</y>
+      <w>190</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+*Registry Event Event Type*
+--
+CREATED
+UPDATED
+DELETED</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>40</x>
+      <y>560</y>
+      <w>380</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>*Subscription*
+--
+- id
+- start_date
+- end_date
+- subscription_id
+- subscriber_id
+- notification_mode: NotificationModeType
+- notification_element_type: NotificationElementType
+- notification_element_id: integer
+- last_notification: LocalDateTime
+- data: String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>780</x>
+      <y>470</y>
+      <w>190</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+*Notification Element Type*
+--
+SYSTEM
+OWNER
+VOCABULARY
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>510</x>
+      <y>320</y>
+      <w>220</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>*Subscriber Email Address*
+--
+- id
+- start_date
+- end_date
+- subscriber_email_address_id
+- subscriber_id
+- email_address
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>110</x>
+      <y>320</y>
+      <w>130</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>*Subscriber*
+--
+- id
+- start_date
+- end_date
+- subscriber_id
+- token
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>230</x>
+      <y>370</y>
+      <w>300</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+r1=subscriber
+m1=1
+r2=email address
+m2=0..*
+m1pos=0,0
+r1pos=0,0</panel_attributes>
+    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>160</x>
+      <y>430</y>
+      <w>110</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=-
+r1=subscriber
+m1=1
+r2=subscription
+m2=0..*
+m1pos=0,0
+r1pos=0,0</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>880</x>
+      <y>40</y>
+      <w>90</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>*Owner*
+--
+- owner_id
+- owner
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>780</x>
+      <y>320</y>
+      <w>190</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+*Notification Mode Type*
+--
+EMAIL</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>830</y>
+      <w>600</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>*Workflow Methods*
+--
+--
+_insertAccessPoint(em: EntityManager, existingAccessPoint: AccessPoint,_
+_    taskInfo: TaskInfo, isDraft: boolean, modifiedBy: String, nowTime: LocalDateTime,_
+_    schemaAP: schema.AccessPoint)_
+_deleteAccessPoint(ap: AccessPoint): List&lt;Subtask&gt;_
+_deleteVersionArtefact(va: VersionArtefact): List&lt;Subtask&gt;_
+_-addConceptTransformSubtasks(subtaskList: List&lt;Subtask&gt;)_
+_createHarvestPoolPartySubtask(operation: SubtaskOperationType,_
+_    vocabulary: Vocabulary): Subtask_
+_createImporterSesameSubtask(operation: SubtaskOperationType): Subtask_
+_createPublishSissvocSubtask(operation: SubtaskOperationType): Subtask_
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>480</x>
+      <y>350</y>
+      <w>310</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>*Task*
+--
+-vocabularyId
+-versionId
+-subtasks: SortedSet&lt;Subtask&gt;
+-results: Map&lt;String, String&gt;
+--
+getVocabularyId(): Integer
+setVocabularyId(aVocabularyId: Integer)
+getVersionId(): Integer
+setVersionId(aVersionId: Integer)
+setSubtasks(aSubtasks: List&lt;Subtask&gt;)
+addSubtask(aSubtask: Subtask)
+addSubtasks(subtaskList: List&lt;Subtask&gt;)
+getSubtasks(): List&lt;Subtask&gt;
+getResults(): Map&lt;String, String&gt;
+setResults(aResults: Map&lt;String, String&gt;)
+addResult(key: String, value: String)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>920</x>
+      <y>350</y>
+      <w>490</w>
+      <h>520</h>
+    </coordinates>
+    <panel_attributes>*Subtask*
+--
+-subtaskProviderType: SubtaskProviderType
+-operation: SubtaskOperationType
+-priority: Integer
+-provider: String
+-subtaskProperties: Map&lt;String, String&gt;
+-status: TaskStatus = TaskStatus.NEW
+-results: Map&lt;String, String&gt;
+--
+Subtask(aSubtaskProviderType: SubtaskProviderType,
+  anOperation: SubtaskOperationType,
+  aProviderClass: Class&lt;? extends WorkflowProvider&gt;)
+setSubtaskProviderType(aSubtaskProviderType: SubtaskProviderType)
+getSubtaskProviderType(): SubtaskProviderType
+setOperation(anOperation: SubtaskOperationType)
+getOperation(): SubtaskOperationType
+setPriority(aPriority: Integer)
+getPriority(): Integer
+setProvider(aProvider: String)
+setProvider(aProviderClass: Class&lt;? extends WorkflowProvider&gt;)
+getProvider(): String
+setSubtaskProperties(aSubtaskProperties: Map&lt;String, String&gt;)
+getSubtaskProperties(): Map&lt;String, String&gt;
+determinePriority()
+getStatus(): TaskStatus
+setStatus(aStatus: TaskStatus)
+getResults(): Map&lt;String, String&gt;
+setResults(aResults: Map&lt;String, String&gt;)
+addResult(key: String, value: String)
+compareTo(other: Subtask): int
+equals(other: Object): boolean
+hashCode(): int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>900</x>
+      <y>50</y>
+      <w>160</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+*SubtaskProviderType*
+--
+BACKUP
+HARVEST
+IMPORTER
+PUBLISH
+TRANSFORM</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1090</x>
+      <y>50</y>
+      <w>170</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+*SubtaskOperationType*
+--
+INSERT
+DELETE
+PERFORM</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>350</y>
+      <w>320</w>
+      <h>420</h>
+    </coordinates>
+    <panel_attributes>*Task Info*
+--
+-vocabulary: Vocabulary
+-version: Version
+-task: Task
+-dbTask: db.entity::Task
+-em: EntityManager
+-nowTime: LocalDateTime
+-modifiedBy: String
+--
+TaskInfo(aDbTask: db.entity::Task,
+  aVocabulary: Vocabulary, aVersion: Version)
+TaskInfo(aTask: Task,
+  aVocabulary: Vocabulary, aVersion: Version)
+getVocabulary(): Vocabulary
+getVersion(): Version
+getTask(): Task
+setDbTask(aDbTask: db.entity::Task)
+getDbTask(): db.entity.Task
+setEm(anEm: EntityManager)
+getEm(): EntityManager
+setNowTime(nowTime: LocalDateTime)
+nowTime(): LocalDateTime
+setModifiedBy(modifiedBy: String)
+modifiedBy(): String
+persist()
+process()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>700</x>
+      <y>50</y>
+      <w>170</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+*TaskStatus*
+--
+NEW
+PROGRESS
+SUCCESS
+ERROR
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>380</y>
+      <w>140</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=task
+m1=0..1</panel_attributes>
+    <additional_attributes>120.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>780</x>
+      <y>380</y>
+      <w>160</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=subtasks
+m1=0..*</panel_attributes>
+    <additional_attributes>140.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>40</y>
+      <w>320</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>*Task Runner*
+--
+_RESPONSE: String_
+_TIMESTAMP: String_
+_ERROR: String_
+_GENERIC_ERROR_RESPONSE: String_
+_STACKTRACE: String_
+_ALERT_HTML: String_
+_INFO_PRIVATE: String_
+-taskInfo: TaskInfo
+--
+TaskRunner(aTaskInfo: TaskInfo)
+runTask()
+-addTimestamp()
+-addTimestamp(subtask: Subtask)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>190</x>
+      <y>260</y>
+      <w>80</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+r1=taskInfo
+m1=1</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

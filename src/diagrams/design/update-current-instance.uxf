@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLSequenceAllInOne</id>
+    <coordinates>
+      <x>0</x>
+      <y>0</y>
+      <w>2800</w>
+      <h>1150</h>
+    </coordinates>
+    <panel_attributes>title=sd Update the current instance of a vocabulary
+autoTick=false
+obj=_pv: PutVocabularies_~pv
+obj=ModelMethods~mm
+obj=Model subsystem~ms
+obj=Database subsystem~db
+obj=TaskInfo~ti
+obj=_tr: TaskRunner_~tr
+obj=Workflow subsystem~ws
+tick=
+on=pv
+gate-&gt;&gt;&gt;pv :updateVocabulary()
+tick=
+pv-&gt;&gt;&gt;mm :vm := createVocabularyModel(id)
+tick=
+mm-&gt;&gt;&gt;ms :new VocabularyModel(id)
+on=ms
+tick=
+ms-&gt;&gt;&gt;db :DAO methods
+tick=
+db.&gt;ms :database entities
+tick=
+ms.&gt;mm
+tick=
+mm.&gt;pv
+tick=
+pv-&gt;&gt;&gt;mm :applyChanges(vm, updatedVocabulary)
+tick=
+mm-&gt;&gt;&gt;ms :vm.applyChanges(updatedVocabulary)
+tick=
+ms-&gt;&gt;&gt;db :DAO methods
+tick=
+db.&gt;ms :new/updated database entities
+tick=
+ms-&gt;&gt;&gt;ti :*[if/as needed]\ntaskInfo := new TaskInfo()
+on=ti
+tick=
+ti.&gt;ms
+tick=
+ms-&gt;&gt;&gt;tr :new TaskRunner(taskInfo)
+on=tr
+tick=
+tr.&gt;ms :TaskRunner tr
+tick=
+ms-&gt;&gt;&gt;tr :tr.runTask()
+tick=
+tr-&gt;&gt;&gt;ws :*[for all subtasks]\nrun subtasks using providers
+tick=
+ws-&gt;&gt;&gt;db : DAO methods
+tick=
+db.&gt;ws :new/updated database entities
+tick=
+ws.&gt;tr
+tick=
+tr.&gt;ms
+off=tr
+tick=
+off=ti
+ms.&gt;mm
+tick=
+mm.&gt;pv
+tick=
+pv-&gt;&gt;&gt;mm :getCurrent(vm)
+tick=
+mm-&gt;&gt;&gt;ms :vm.getCurrent()
+tick=
+ms.&gt;mm
+tick=
+mm.&gt;pv
+tick=
+off=ms
+pv.&gt;gate :updated vocabulary
+
+
+
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
