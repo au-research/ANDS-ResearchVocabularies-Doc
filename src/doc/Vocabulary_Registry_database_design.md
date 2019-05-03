@@ -4,13 +4,14 @@ output:
   html:
     to: html
     standalone: true
-    css: pandoc.css
+    css: ../css/pandoc.css
+    lua-filter: ../pandoc/links-md-to-html.lua
     toc: true
 comment: |
   You can use panrun on this file, to make HTML:
   panrun Vocabulary_Registry_database_design.md > Vocabulary_Registry_database_design.html
   To generate HTML using pandoc, you'll need these settings:
-  pandoc -s --toc --css ../css/pandoc.css -f markdown -t html Vocabulary_Registry_database_design.md > Vocabulary_Registry_database_design.html
+  pandoc -s --toc --css ../css/pandoc.css -f markdown -t html --lua-filter=../pandoc/links-md-to-html.lua Vocabulary_Registry_database_design.md > Vocabulary_Registry_database_design.html
   To generate PDF:
   pandoc -s --toc -f markdown -o Vocabulary_Registry_database_design.pdf Vocabulary_Registry_database_design.md
   Or, starting from previously-generated HTML:
@@ -22,7 +23,7 @@ comment: |
 
 - There are some nice UML diagrams that provide a logical view of the
   main database entities at: 
-  [Vocabulary Registry design diagrams](Vocabulary_Registry_design_diagrams).
+  [Vocabulary Registry design diagrams](Vocabulary_Registry_design_diagrams.md).
 
 # Design principles
 
@@ -32,7 +33,7 @@ comment: |
   *required* attributes can be columns; *optional* attributes are
   represented in the various "data" fields (represented as JSON).
 - The `start_date` and `end_date` columns are explained in
-  [Vocabulary database temporal data](Vocabulary_database_temporal_data).
+  [Vocabulary database temporal data](Vocabulary_database_temporal_data.md).
 - Within each main table, there are typically two id columns; the first,
   called `id`, is a surrogate key. The second is the "real" id. For
   example, the vocabularies table has `id` and `vocabulary_id`.
@@ -89,7 +90,7 @@ comment: |
   JSON-flavoured `data` column, it will be stored with key `"iri"`.
 - On the implementation of serialization of data into JSON, please note
   the section "A note about the order of keys in JSON data" at the page
-  [Vocabulary Registry mappers between database and schema objects](Vocabulary_Registry_mappers_between_database_and_schema_objects).
+  [Vocabulary Registry mappers between database and schema objects](Vocabulary_Registry_mappers_between_database_and_schema_objects.md).
 
 ## Design principles for access points and version artefacts
 
@@ -135,7 +136,7 @@ schema. Changes to the database schema of a particular instance of the
 Registry database are applied *only* using Liquibase, never by running
 DDL commands "manually". There is an Ant target (defined in `build.xml`)
 for applying schema changes; see
-[Vocabulary Registry build script and targets](Vocabulary_Registry_build_script_and_targets).
+[Vocabulary Registry build script and targets](Vocabulary_Registry_build_script_and_targets.md).
 
 There are two tables used by Liquibase to maintain the database schema
 within a database deployment. In general, you almost never need to pay
@@ -388,7 +389,7 @@ Indexes (this is a draft list: refine this!):
 ## Table: version\_artefacts
 
 See also the child page
-[Vocabulary database new design: version\_artefacts](Vocabulary_database_new_design_version_artefacts)
+[Vocabulary database new design: version\_artefacts](Vocabulary_database_new_design_version_artefacts.md)
 for details about the various types of version artefact.
 
 +-----------------------+--------------+----------------------------+--------------------------------------------------------------------------+----------------------------+
@@ -440,7 +441,7 @@ Indexes (this is a draft list: refine this!):
 ## Table: access\_points
 
 See also the child page
-[Vocabulary database new design: access\_points](Vocabulary_database_new_design_access_points) for
+[Vocabulary database new design: access\_points](Vocabulary_database_new_design_access_points.md) for
 details about the various types of access point.
 
 +-------------------+--------------+------------------------+-------------------------------------------------------------------------------+----------------------------+
@@ -705,7 +706,7 @@ insert into poolparty_servers(id,api_url,username,password)
 ## Table: registry\_events
 
 See the page
-[Vocabulary Registry events](Vocabulary_Registry_events) for the
+[Vocabulary Registry events](Vocabulary_Registry_events.md) for the
 definitive list of all possible types of Registry event.
 
 List of events in the lifecycle of a registry element (i.e., a
@@ -718,43 +719,43 @@ gone with element\_type/element\_id, how do we then conveniently get
 events for all versions of that vocabulary? This could be done with a
 VIEW that does the necessary joins. But how expensive would that be?
 
-+----------------+--------------+-----------------+-----------------------------------------------------------+----------------------------+
-| Column         | Type         | Extra           | Notes                                                     | Example(s)                 |
-+:===============+:=============+:================+:==========================================================+:===========================+
-| id             | integer      | auto\_increment | Surrogate key                                             | 2                          |
-+----------------+--------------+-----------------+-----------------------------------------------------------+----------------------------+
-| element\_type  | varchar(45)  |                 | Enumerated type (registry schema                          | VOCABULARIES\              |
-|                |              |                 | `registry-event-element-type`): the type of registry      | VERSIONS\                  |
-|                |              |                 | element. Let's say for now that we support temporal       | ACCESS\_POINTS\            |
-|                |              |                 | elements only (i.e., with start\_date/end\_date values    | RELATED\_ENTITIES          |
-|                |              |                 | and corresponding \_ids tables). That means VOCABULARIES, |                            |
-|                |              |                 | VERSIONS, etc., but not TASKS.                            |                            |
-+----------------+--------------+-----------------+-----------------------------------------------------------+----------------------------+
-| element\_id    | integer      |                 | The "real" id of the registry element, in the             | 2                          |
-|                |              |                 | corresponding table. So, if element\_type=VOCABULARIES,   |                            |
-|                |              |                 | this would be a value from the                            |                            |
-|                |              |                 | vocabularies.vocabulary\_id column.                       |                            |
-+----------------+--------------+-----------------+-----------------------------------------------------------+----------------------------+
-| event\_date    | datetime     |                 | Value is in the UTC timezone                              | 2016-08-15 13:50:47.123468 |
-+----------------+--------------+-----------------+-----------------------------------------------------------+----------------------------+
-| event\_type    | varchar(45)  |                 | Enumerated type (registry schema                          | CREATED                    |
-|                |              |                 | `registry-event-event-type`), e.g., CREATED, DELETED,     |                            |
-|                |              |                 | \.... At present, the value is to be interpreted in terms |                            |
-|                |              |                 | of current instances *only*, i.e., not drafts. For        |                            |
-|                |              |                 | example, if a vocabulary is "created" first as a draft,   |                            |
-|                |              |                 | no registry event is recorded for that. If the draft is   |                            |
-|                |              |                 | subsequently published, *that* is recorded as a registry  |                            |
-|                |              |                 | event of event\_type CREATED.                             |                            |
-+----------------+--------------+-----------------+-----------------------------------------------------------+----------------------------+
-| event\_user    | varchar(255) |                 | The user Role ID responsible for creating this row in the | rwalker                    |
-|                |              |                 | table. *Not* (necessarily) the role that owns the         |                            |
-|                |              |                 | registry element.                                         |                            |
-+----------------+--------------+-----------------+-----------------------------------------------------------+----------------------------+
-| event\_details | text         |                 | JSON to store everything else. A map of strings to        | { }                        |
-|                |              |                 | objects, which are either strings or integers. See        |                            |
-|                |              |                 | [Vocabulary Registry events](Vocabulary_Registry_events)  |                            |
-|                |              |                 | for the keys and values used for each type of event.      |                            |
-+----------------+--------------+-----------------+-----------------------------------------------------------+----------------------------+
++----------------+--------------+-----------------+--------------------------------------------------------------+----------------------------+
+| Column         | Type         | Extra           | Notes                                                        | Example(s)                 |
++:===============+:=============+:================+:=============================================================+:===========================+
+| id             | integer      | auto\_increment | Surrogate key                                                | 2                          |
++----------------+--------------+-----------------+--------------------------------------------------------------+----------------------------+
+| element\_type  | varchar(45)  |                 | Enumerated type (registry schema                             | VOCABULARIES\              |
+|                |              |                 | `registry-event-element-type`): the type of registry         | VERSIONS\                  |
+|                |              |                 | element. Let's say for now that we support temporal          | ACCESS\_POINTS\            |
+|                |              |                 | elements only (i.e., with start\_date/end\_date values       | RELATED\_ENTITIES          |
+|                |              |                 | and corresponding \_ids tables). That means VOCABULARIES,    |                            |
+|                |              |                 | VERSIONS, etc., but not TASKS.                               |                            |
++----------------+--------------+-----------------+--------------------------------------------------------------+----------------------------+
+| element\_id    | integer      |                 | The "real" id of the registry element, in the                | 2                          |
+|                |              |                 | corresponding table. So, if element\_type=VOCABULARIES,      |                            |
+|                |              |                 | this would be a value from the                               |                            |
+|                |              |                 | vocabularies.vocabulary\_id column.                          |                            |
++----------------+--------------+-----------------+--------------------------------------------------------------+----------------------------+
+| event\_date    | datetime     |                 | Value is in the UTC timezone                                 | 2016-08-15 13:50:47.123468 |
++----------------+--------------+-----------------+--------------------------------------------------------------+----------------------------+
+| event\_type    | varchar(45)  |                 | Enumerated type (registry schema                             | CREATED                    |
+|                |              |                 | `registry-event-event-type`), e.g., CREATED, DELETED,        |                            |
+|                |              |                 | \.... At present, the value is to be interpreted in terms    |                            |
+|                |              |                 | of current instances *only*, i.e., not drafts. For           |                            |
+|                |              |                 | example, if a vocabulary is "created" first as a draft,      |                            |
+|                |              |                 | no registry event is recorded for that. If the draft is      |                            |
+|                |              |                 | subsequently published, *that* is recorded as a registry     |                            |
+|                |              |                 | event of event\_type CREATED.                                |                            |
++----------------+--------------+-----------------+--------------------------------------------------------------+----------------------------+
+| event\_user    | varchar(255) |                 | The user Role ID responsible for creating this row in the    | rwalker                    |
+|                |              |                 | table. *Not* (necessarily) the role that owns the            |                            |
+|                |              |                 | registry element.                                            |                            |
++----------------+--------------+-----------------+--------------------------------------------------------------+----------------------------+
+| event\_details | text         |                 | JSON to store everything else. A map of strings to           | { }                        |
+|                |              |                 | objects, which are either strings or integers. See           |                            |
+|                |              |                 | [Vocabulary Registry events](Vocabulary_Registry_events.md)  |                            |
+|                |              |                 | for the keys and values used for each type of event.         |                            |
++----------------+--------------+-----------------+--------------------------------------------------------------+----------------------------+
 
 Indexes (this is a draft list: refine this!):
 
@@ -862,7 +863,7 @@ Indexes (this is a draft list: refine this!):
 # Resource IRI resolution service
 
 See
-[Vocabulary resource IRI resolution service](Vocabulary_resource_IRI_resolution_service) for
+[Vocabulary resource IRI resolution service](Vocabulary_resource_IRI_resolution_service.md) for
 further details about the database tables that support the resource IRI
 resolution service.
 

@@ -4,12 +4,13 @@ output:
   html:
     to: html
     standalone: true
-    css: pandoc.css
+    css: ../css/pandoc.css
+    lua-filter: ../pandoc/links-md-to-html.lua
 comment: |
   You can use panrun on this file, to make HTML:
   panrun Vocabulary_Registry_design_diagrams.md > Vocabulary_Registry_design_diagrams.html
   To generate HTML using pandoc, you'll need these settings:
-  pandoc -s --css ../css/pandoc.css -f markdown -t html Vocabulary_Registry_design_diagrams.md > Vocabulary_Registry_design_diagrams.html
+  pandoc -s --css ../css/pandoc.css -f markdown -t html --lua-filter=../pandoc/links-md-to-html.lua Vocabulary_Registry_design_diagrams.md > Vocabulary_Registry_design_diagrams.html
   To generate PDF:
   pandoc -s -f markdown -o Vocabulary_Registry_design_diagrams.pdf Vocabulary_Registry_design_diagrams.md
   Or, starting from previously-generated HTML:
@@ -27,26 +28,26 @@ essential "model" entities of the registry.
   status, and some other important attributes.
 - Diagram showing the classes that implement the model subsystem as
   part of the publication workflow. See
-  [Vocabulary Registry model subsystem](Vocabulary_Registry_model_subsystem)
+  [Vocabulary Registry model subsystem](Vocabulary_Registry_model_subsystem.md)
   for details.
 - Diagram showing the top-level classes that implement the workflow,
   including classes that describe tasks. See
-  [Vocabulary Registry Workflow subsystem design](Vocabulary_Registry_Workflow_subsystem_design)
+  [Vocabulary Registry Workflow subsystem design](Vocabulary_Registry_Workflow_subsystem_design.md)
   for details.
 - Sequence diagram for the scenario of updating the current instance
   of a vocabulary. Shows the interactions between many subsystems:
   API, model, workflow, database.
 - Diagram showing the classes that implement registry events,
   subscriptions, and notifications. See
-  [Vocabulary Registry events](https://intranet.ands.org.au/pages/viewpage.action?spaceKey=PROJ&title=Vocabulary+Registry+events)
+  [Vocabulary Registry events](Vocabulary_Registry_events.md)
   and
-  [Vocabulary subscription and notification subsystem](Vocabulary_subscription_and_notification_subsystem)
+  [Vocabulary subscription and notification subsystem](Vocabulary_subscription_and_notification_subsystem.md)
   for details.
 - Diagram showing the classes that implement the fixed-time model
   subsystem used by the notification subsystem. See
-  [Vocabulary subscription and notification subsystem](Vocabulary_subscription_and_notification_subsystem)
+  [Vocabulary subscription and notification subsystem](Vocabulary_subscription_and_notification_subsystem.md)
   and
-  [Vocabulary fixed-time vocabulary model subsystem](Vocabulary_fixed-time_vocabulary_model_subsystem)
+  [Vocabulary fixed-time vocabulary model subsystem](Vocabulary_fixed-time_vocabulary_model_subsystem.md)
   for details.
 
 UML diagrams have been created using UMLet (<http://www.umlet.com/>).
