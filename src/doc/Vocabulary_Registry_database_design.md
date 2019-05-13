@@ -22,7 +22,7 @@ comment: |
 # See also
 
 - There are some nice UML diagrams that provide a logical view of the
-  main database entities at: 
+  main database entities at:
   [Vocabulary Registry design diagrams](Vocabulary_Registry_design_diagrams.md).
 
 # Design principles
@@ -751,7 +751,7 @@ VIEW that does the necessary joins. But how expensive would that be?
 |                |              |                 | table. *Not* (necessarily) the role that owns the            |                            |
 |                |              |                 | registry element.                                            |                            |
 +----------------+--------------+-----------------+--------------------------------------------------------------+----------------------------+
-| event\_details | text         |                 | JSON to store everything else. A map of strings to           | { }                        |
+| event\_details | text         |                 | JSON to store everything else. A map of strings to           | {}                         |
 |                |              |                 | objects, which are either strings or integers. See           |                            |
 |                |              |                 | [Vocabulary Registry events](Vocabulary_Registry_events.md)  |                            |
 |                |              |                 | for the keys and values used for each type of event.         |                            |
@@ -1150,14 +1150,14 @@ specified in the previous section.
     - As JPA entity listeners. This is underway. See the VersionListener
       class for an example.
 - It turns out that putting constraints at the level of the DDL (i.e.,
-  table and index creation SQL commands) is problematic because JPA can
-  re-order statements within a transaction. See, e.g., 
-  <https://vladmihalcea.com/hibernate-facts-knowing-flush-operations-order-matters/> for
-  an explanation. If we end up doing this sort of thing, we will need to
-  put calls to `em.flush()` in various places. See, e.g., the comments
-  and commented-out changesets for triggers in
+  table and index creation SQL commands) is problematic because JPA
+  can re-order statements within a transaction. See, e.g.,
+  <https://vladmihalcea.com/hibernate-facts-knowing-flush-operations-order-matters/>
+  for an explanation. If we end up doing this sort of thing, we will
+  need to put calls to `em.flush()` in various places. See, e.g., the
+  comments and commented-out changesets for triggers in
   `src/main/db/changelog/registry-0001.xml`, and the comments for the
-  changeset `0002-vocabularies_vocabulary_id_end_date-createIndex`
-  in `src/main/db/changelog/registry-0002.xml`.
+  changeset `0002-vocabularies_vocabulary_id_end_date-createIndex` in
+  `src/main/db/changelog/registry-0002.xml`.
 
 
