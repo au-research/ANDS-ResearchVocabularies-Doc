@@ -183,7 +183,7 @@ Commons Collections library; see
 <https://commons.apache.org/proper/commons-collections/javadocs/api-4.1/org/apache/commons/collections4/sequence/package-summary.html>)
 to determine a minimal set of database insertions/updates/deletions to
 be performed. See the child page
-[Vocabulary Registry model subsystem sequences](Vocabulary_Registry_model_subsystem_sequences)
+[Vocabulary Registry model subsystem sequences](Vocabulary_Registry_model_subsystem_sequences.md)
 for more details.
 
 # Automated tests
